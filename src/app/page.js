@@ -24,13 +24,7 @@ export default function Home() {
     })
       .then(async (res) => {
         const r = await res.json();
-        setHistory((oldHistory) => [
-          ...oldHistory,
-          {
-            role: "assistant",
-            content: r.response,
-          },
-        ]);
+        setHistory((oldHistory) => [...oldHistory, r]);
         setLoading(false);
       })
       .catch((err) => {
