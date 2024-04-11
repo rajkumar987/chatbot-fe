@@ -17,7 +17,7 @@ export default function Home() {
     ]);
     setMessage("");
     setLoading(true);
-    fetch(`https://chatbot-be-wt0t.onrender.com/api/chat`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ input_question: message, history: history }),
@@ -72,25 +72,6 @@ export default function Home() {
                           AI assistant
                         </p>
                         {message.content}
-                        {/* {message.links && (
-                          <div className="mt-4 flex flex-col gap-2">
-                            <p className="text-sm font-medium text-slate-500">
-                              Sources:
-                            </p>
-
-                            {message.links?.map((link) => {
-                              return (
-                                <a
-                                  href={link}
-                                  key={link}
-                                  className="block w-fit px-2 py-1 text-sm  text-violet-700 bg-violet-100 rounded"
-                                >
-                                  {formatPageName(link)}
-                                </a>
-                              );
-                            })}
-                          </div>
-                        )} */}
                       </div>
                     </div>
                   );
@@ -100,9 +81,6 @@ export default function Home() {
                       className="self-end flex flex-row-reverse gap-2 items-start"
                       key={idx}
                     >
-                      {/* <div className="text-gray-900 w-10 h-10 bg-white rounded-full shadow-[0_10px_40px_0px_rgba(0,0,0,0.15)] flex justify-center items-center">
-                        <p>U</p>
-                      </div> */}
                       <div
                         className=" w-auto px-3 py-2 max-w-xl break-words bg-white rounded-b-xl rounded-tl-xl text-black   shadow-[0_10px_40px_0px_rgba(0,0,0,0.15)]"
                         key={idx}
@@ -134,13 +112,13 @@ export default function Home() {
           </div>
           {/* input area */}
           <div className="flex sticky bottom-0 w-full px-6 pb-6 h-20">
-            <div className="w-full relative">
-              <textarea
+            <div className="w-full relative flex items-center">
+              <input
                 aria-label="chat input"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type a message"
-                className="w-full h-full resize-none rounded-full border border-slate-900/10 bg-white pl-6 pr-24 py-[14px] text-base placeholder:text-slate-400 focus:border-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500/10 shadow-[0_10px_40px_0px_rgba(0,0,0,0.15)] text-gray-900"
+                className="w-full h-full resize-none rounded-full border border-slate-900/10 bg-white pl-6 pr-24  text-base placeholder:text-slate-400 focus:border-violet-500 focus:outline-none focus:ring-4 focus:ring-violet-500/10 shadow-[0_10px_40px_0px_rgba(0,0,0,0.15)] text-gray-900"
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
@@ -153,7 +131,7 @@ export default function Home() {
                   e.preventDefault();
                   handleClick();
                 }}
-                className="flex w-10 h-10 items-center justify-center rounded-full px-3 text-sm  bg-violet-600 font-semibold text-white hover:bg-violet-700 active:bg-violet-800 absolute right-2 bottom-2 disabled:bg-violet-100 disabled:text-violet-400"
+                className="flex p-2 items-center justify-center rounded-full text-sm  bg-violet-600 font-semibold text-white hover:bg-violet-700 active:bg-violet-800 absolute right-2  disabled:bg-violet-100 disabled:text-violet-400"
                 type="submit"
                 aria-label="Send"
                 disabled={!message || loading}
